@@ -30,7 +30,6 @@ export const authOptions = {
             email: res.user.email,
           };
 
-          console.log(user);
           return user;
         }
 
