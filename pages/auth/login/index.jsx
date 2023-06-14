@@ -1,5 +1,5 @@
 import LoginButton from "@components/LoginButton";
-import LoginGoogle from "@components/loginGoogle";
+import LoginGoogle from "../../../components/LoginGoogle";
 import Layout from "@components/Layout";
 import Link from "next/link";
 import { useRef } from "react";
@@ -100,13 +100,15 @@ export default function Login() {
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
-  return {
+  if (session) {
+    return {
     redirect: {
       destination: "/",
       permanent: false,
     },
     props: {},
   };
+  }
 
   return { props: {} };
 }
