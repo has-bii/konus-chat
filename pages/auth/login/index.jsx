@@ -2,19 +2,26 @@ import LoginButton from "@components/LoginButton";
 import LoginGoogle from "../../../components/LoginGoogle";
 import Layout from "@components/Layout";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import Validation from "@components/Validation";
 
 export default function Login() {
   const emailRef = useRef();
   const passRef = useRef();
   const router = useRouter();
+  const [alert, setAlert] = useState({
+    status: "",
+    message: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setAlert({ message: "", status: "loading" });
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -24,6 +31,7 @@ export default function Login() {
     });
 
     if (res.ok) router.push("/");
+    else setAlert({ message: "Invalid email or password!", status: "" });
   };
 
   return (
@@ -53,7 +61,7 @@ export default function Login() {
               />
             </div>
             {/* Password */}
-            <div className="mb-4">
+            <div className="mb-3">
               <label
                 className="block mb-1 font-light text-white text-md"
                 htmlFor="password"
@@ -69,7 +77,10 @@ export default function Login() {
                 required
               />
             </div>
-            <LoginButton />
+
+            <Validation alert={alert} />
+
+            <LoginButton alert={alert} />
           </form>
 
           {/* continue with */}
@@ -102,12 +113,12 @@ export async function getServerSideProps(context) {
 
   if (session) {
     return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-    props: {},
-  };
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+      props: {},
+    };
   }
 
   return { props: {} };

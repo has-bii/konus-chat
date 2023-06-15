@@ -11,7 +11,7 @@ const signin = async (email, password) => {
     };
   }
 
-  connectDB();
+  await connectDB();
 
   const user = await User.findOne({ email: email });
 
@@ -49,7 +49,7 @@ const signin = async (email, password) => {
 };
 
 const signup = async (req, res) => {
-  connectDB();
+  await connectDB();
 
   const user = new User({
     fullName: req.body.fullName,
@@ -60,7 +60,7 @@ const signup = async (req, res) => {
   const findUser = await User.findOne({ email: req.body.email });
 
   if (findUser) {
-    return { message: "Error: Email already exists", status: 400 };
+    return { message: "Email already exists!", status: 400 };
   }
 
   const savingUser = await user.save();

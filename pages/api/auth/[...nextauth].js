@@ -1,4 +1,4 @@
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { signin } from "@controller/authController";
@@ -30,7 +30,6 @@ export const authOptions = {
             email: res.user.email,
           };
 
-          console.log(user);
           return user;
         }
 
@@ -38,7 +37,15 @@ export const authOptions = {
       },
     }),
   ],
-  callbacks: {},
+  callbacks: {
+    async session({ session }) {
+      if (session.user.image) {
+      } else {
+        session.user.image = null;
+      }
+      return session;
+    },
+  },
   pages: {
     signIn: "/auth/login",
   },
