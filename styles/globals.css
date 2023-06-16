@@ -3,19 +3,24 @@
 @tailwind utilities;
 
 ._login-bg {
-    background-image: url('../public/img/bg-login.jpg');
+    background-image: url('../public/img/gradient_bg.jpg');
     width: auto;
     height: 100vh;
     background-position: center;
     background-size: cover;
 }
 
-/* .my-button {
-    transition: .5s;
-    z-index: 1;
-}
+@layer utilities {
+    @variants responsive {
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
 
-.my-button:hover {
-    color: #ffffff;
-    background: #000;
-} */
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+    }
+  }
