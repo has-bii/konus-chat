@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import Validation from "@components/Validation";
+import LoginGoogle from "@components/LoginGoogle";
 
 export default function Register() {
   const router = useRouter();
@@ -20,10 +21,11 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (/^[A-Za-z]*$/.test(nameRef.current.value)) {
+    if (/^[A-Za-z\s]*$/.test(nameRef.current.value)) {
       setAlert({ message: "" });
     } else {
       setAlert({ message: "Name must contain only letters" });
+      console.log(nameRef.current.value);
       return;
     }
 
@@ -36,7 +38,7 @@ export default function Register() {
 
     await axios
       .post("/api/auth/register", {
-        fullName: nameRef.current.value,
+        name: nameRef.current.value,
         email: emailRef.current.value,
         password: passRef.current.value,
       })
@@ -54,7 +56,7 @@ export default function Register() {
       <div className="flex content-center justify-center w-full h-screen md:w-auto md:h-auto md:p-8 md:px-10 md:rounded-xl md:border md:border-white/40 backdrop-blur-sm bg-white/[.05]">
         <div className="flex flex-col content-center justify-center">
           <div className="mb-4 text-3xl font-bold text-center text-white">
-            Create New Account
+            Create an account
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -114,6 +116,18 @@ export default function Register() {
 
             <RegisterButton />
           </form>
+
+          {/* continue with */}
+          <div className="flex flex-row items-center justify-between my-5 flex-nowrap">
+            <div className="h-px bg-white/60 grow" />
+            <div className="px-2 text-sm font-light text-center shrink text-white/60">
+              or continue with
+            </div>
+            <div className="h-px bg-white/60 grow" />
+          </div>
+
+          {/* Login with Google */}
+          <LoginGoogle />
 
           <div className="mt-4 font-light text-center text-md text-white/60">
             Already have account?{" "}

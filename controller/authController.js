@@ -35,7 +35,7 @@ const signin = async (email, password) => {
     };
 
   const verifiedUser = await User.findOne({ email: email }).select(
-    "_id fullName email"
+    "_id name email"
   );
 
   const data = {
@@ -51,9 +51,12 @@ const signin = async (email, password) => {
 const signup = async (req, res) => {
   await connectDB();
 
+  var username = req.body.name.toLowerCase().replace(" ", "");
+
   const user = new User({
-    fullName: req.body.fullName,
+    name: req.body.name.toLowerCase(),
     email: req.body.email,
+    username: username,
     password: bcrypt.hashSync(req.body.password, 12),
   });
 

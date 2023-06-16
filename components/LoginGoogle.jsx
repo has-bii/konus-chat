@@ -4,7 +4,7 @@ export default function LoginGoogle() {
   return (
     <button
       type="button"
-      className="flex items-center justify-center w-full font-bold text-black bg-white rounded-xl h-11"
+      className="flex items-center justify-center w-full font-bold text-black bg-white my-button rounded-xl h-11"
       onClick={() => signIn("google", { callbackUrl: "/" })}
     >
       <svg
