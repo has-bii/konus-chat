@@ -1,39 +1,51 @@
 "use client";
 
-import RegisterButton from "@components/RegisterButton";
 import Layout from "@components/Layout";
+import Validation from "@components/Validation";
+import MyButton from "@components/MyButton";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import Validation from "@components/Validation";
-import LoginGoogle from "@components/LoginGoogle";
+import { signIn } from "next-auth/react";
 
 export default function Register() {
   const router = useRouter();
   const nameRef = useRef();
   const emailRef = useRef();
   const passRef = useRef();
-  const [alert, setAlert] = useState({ status: "", message: "" });
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const typing = () => {
+    setMessage("");
+  };
+
+  const signGoogle = () => {
+    signIn("google", { callbackUrl: "/" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     if (/^[A-Za-z\s]*$/.test(nameRef.current.value)) {
-      setAlert({ message: "" });
+      setMessage("");
     } else {
-      setAlert({ message: "Name must contain only letters" });
-      console.log(nameRef.current.value);
+      setMessage("Name must contain only letters!");
+      setLoading(false);
       return;
     }
 
     if (passRef.current.value.length < 6) {
-      setAlert({ message: "Password at least 6 characters" });
+      setMessage("Password at least 6 characters!");
+      setLoading(false);
       return;
     } else {
-      setAlert({ message: "" });
+      setMessage("");
     }
 
     await axios
@@ -44,7 +56,10 @@ export default function Register() {
       })
       .then(({ data }) => {
         if (data.status === 200) router.replace("/");
-        else setAlert({ message: data.message, status: "" });
+        else {
+          setMessage(data.message);
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -74,6 +89,7 @@ export default function Register() {
                 type="text"
                 className="w-full h-11 px-4 rounded-xl bg-transparent bg-gradient-to-r from-white/25 from-65% border border-white focus:border-white focus:outline-0 focus:ring-0 hover:bg-white/[.2] text-white placeholder:text-white placeholder:font-extralight"
                 ref={nameRef}
+                onChange={typing}
                 required
               />
             </div>
@@ -91,6 +107,7 @@ export default function Register() {
                 type="email"
                 className="w-full h-11 px-4 rounded-xl bg-transparent bg-gradient-to-r from-white/25 from-65% border border-white focus:border-white focus:outline-0 focus:ring-0 hover:bg-white/[.2] text-white placeholder:text-white placeholder:font-extralight"
                 ref={emailRef}
+                onChange={typing}
                 required
               />
             </div>
@@ -106,19 +123,20 @@ export default function Register() {
                 id="password"
                 placeholder="Enter password"
                 type="password"
+                onChange={typing}
                 className="w-full h-11 px-4 rounded-xl bg-transparent bg-gradient-to-r from-white/25 from-65% border border-white focus:border-white focus:outline-0 focus:ring-0 hover:bg-white/[.2] text-white placeholder:text-white placeholder:font-extralight"
                 ref={passRef}
                 required
               />
             </div>
 
-            <Validation alert={alert} />
+            <Validation message={message} />
 
-            <RegisterButton />
+            <MyButton text="Register" isLoading={loading} width="w-full" />
           </form>
 
           {/* continue with */}
-          <div className="flex flex-row items-center justify-between my-5 flex-nowrap">
+          <div className="flex flex-row items-center justify-between mt-5 flex-nowrap">
             <div className="h-px bg-white/60 grow" />
             <div className="px-2 text-sm font-light text-center shrink text-white/60">
               or continue with
@@ -127,7 +145,7 @@ export default function Register() {
           </div>
 
           {/* Login with Google */}
-          <LoginGoogle />
+          <MyButton text="Google" icon="/icon/google.svg" func={signGoogle} />
 
           <div className="mt-4 font-light text-center text-md text-white/60">
             Already have account?{" "}

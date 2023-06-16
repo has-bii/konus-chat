@@ -1,5 +1,3 @@
-import LoginButton from "@components/LoginButton";
-import LoginGoogle from "../../../components/LoginGoogle";
 import Layout from "@components/Layout";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -8,20 +6,28 @@ import { signIn } from "next-auth/react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import Validation from "@components/Validation";
+import MyButton from "@components/MyButton";
 
 export default function Login() {
   const emailRef = useRef();
   const passRef = useRef();
   const router = useRouter();
-  const [alert, setAlert] = useState({
-    status: "",
-    message: "",
-  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const typing = () => {
+    setMessage("");
+  };
+
+  const signGoogle = () => {
+    signIn("google", { callbackUrl: "/" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setAlert({ message: "", status: "loading" });
+    setLoading(!loading);
+    setMessage("");
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -31,7 +37,10 @@ export default function Login() {
     });
 
     if (res.ok) router.push("/");
-    else setAlert({ message: "Invalid email or password!", status: "" });
+    else {
+      setLoading(false);
+      setMessage("Invalid email or password!");
+    }
   };
 
   return (
@@ -56,6 +65,7 @@ export default function Login() {
                 placeholder="Enter email address"
                 type="email"
                 ref={emailRef}
+                onChange={typing}
                 className="w-full h-11 px-4 rounded-xl bg-transparent bg-gradient-to-r from-white/25 from-65% border border-white focus:border-white focus:outline-0 focus:ring-0 hover:bg-white/[.2] text-white placeholder:text-white placeholder:font-extralight"
                 required
               />
@@ -73,14 +83,15 @@ export default function Login() {
                 placeholder="Enter password"
                 type="password"
                 ref={passRef}
+                onChange={typing}
                 className="w-full h-11 px-4 rounded-xl bg-transparent bg-gradient-to-r from-white/25 from-65% border border-white focus:border-white focus:outline-0 focus:ring-0 hover:bg-white/[.2] text-white placeholder:text-white placeholder:font-extralight"
                 required
               />
             </div>
 
-            <Validation alert={alert} />
+            <Validation message={message} />
 
-            <LoginButton alert={alert} />
+            <MyButton text="Sign in" width="w-full" isLoading={loading} />
           </form>
 
           {/* continue with */}
@@ -93,7 +104,7 @@ export default function Login() {
           </div>
 
           {/* Login with Google */}
-          <LoginGoogle />
+          <MyButton text="Google" icon="/icon/google.svg" func={signGoogle} />
 
           {/* Create new account */}
           <div className="mt-4 font-light text-center text-md text-white/60">
