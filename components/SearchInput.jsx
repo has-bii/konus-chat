@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function SearchInput({ value, searching }) {
+function SearchInput({ value, searching, func, placeholder }) {
   return (
     <div className="flex items-center w-full gap-2 px-3 pt-4 pb-2 h-fit">
       <input
@@ -9,9 +9,12 @@ function SearchInput({ value, searching }) {
         onChange={searching}
         type="text"
         className="w-full px-4 py-2 bg-black/[0.05] transition hover:bg-white/5 border border-white/30 border-opacity-50 rounded-xl ring-0 outline-0 placeholder:text-white/75"
-        placeholder="Search"
+        placeholder={placeholder}
       />
-      <button className="flex-shrink p-2 border group border-white/30 rounded-xl transition bg-black/[0.05] hover:bg-white/5">
+      <button
+        onClick={func}
+        className="flex-shrink p-2 border group border-white/30 rounded-xl transition bg-black/[0.05] hover:bg-white/5"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -33,6 +36,8 @@ function SearchInput({ value, searching }) {
 SearchInput.propTypes = {
   value: PropTypes.string,
   searching: PropTypes.func,
+  func: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 export default SearchInput;

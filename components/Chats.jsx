@@ -52,7 +52,7 @@ function Chats() {
                 <div className="flex-1 w-12 truncate text-md text-white/75">
                   {chat.last_message}
                 </div>
-                <div className="w-6 h-6 text-center rounded-full bg-sky-300">
+                <div className="w-6 h-6 text-center bg-red-500 rounded-full">
                   <span>5</span>
                 </div>
               </div>

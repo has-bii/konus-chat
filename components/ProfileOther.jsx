@@ -1,25 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
 
 function ProfileOther({ user }) {
   const { name, email, image, username } = user;
   const searchRef = useRef();
-
-  const [focus, setFocus] = useState(false);
-
-  const focusing = () => {
-    setFocus(!focus);
-
-    setInterval(() => {
-      document.getElementById("search-input").focus();
-    }, 100);
-  };
-
-  const blur = () => {
-    focusing();
-    searchRef.current.value = "";
-  };
 
   return (
     <div className="flex w-full items-center p-6 border-b border-b-white/[.2] bg-white/10 rounded-t-xl h-fit">
@@ -43,7 +28,15 @@ function ProfileOther({ user }) {
         <li className="text-xl truncate opacity-75">@{username}</li>
       </ul>
 
-      <button onClick={focusing} className="mr-2">
+      <input
+        id="search-input"
+        type="text"
+        ref={searchRef}
+        placeholder="Search message"
+        className="px-4 py-2 mx-4 h-10 focus:bg-black/10 bg-black/[0.05] transition border border-white/30 border-opacity-50 rounded-xl ring-0 outline-0 placeholder:text-white/75"
+      />
+
+      <button className="mr-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -56,34 +49,6 @@ function ProfileOther({ user }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-          />
-        </svg>
-      </button>
-
-      <input
-        id="search-input"
-        type="text"
-        onBlur={blur}
-        ref={searchRef}
-        placeholder="Search message"
-        className={`px-4 py-2 mx-4 h-10 ${
-          focus ? "" : "hidden"
-        } focus:bg-black/10 bg-black/[0.05] transition border border-white/30 border-opacity-50 rounded-xl ring-0 outline-0 placeholder:text-white/75`}
-      />
-
-      <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-8 h-8"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
           />
         </svg>
       </button>
