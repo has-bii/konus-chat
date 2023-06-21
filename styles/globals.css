@@ -28,13 +28,22 @@
 
   .dropdown-content {
     position: absolute;
-    top: -45%;
-    right: 120%;
-    opacity: 0;
+    top: 100%;
+    right: -280%;
     transition: all ease-in-out .5s;
   }
 
   .dropdown-content.show {
-    opacity: 1;
-    top: 100%;
+    right: 0;
+  }
+
+  .alert {
+    position: absolute;
+    top: -5rem;
+    right: 0;
+    transition: top ease-in-out .5s;
+  }
+
+  .alert.show {
+    top: 0;
   }

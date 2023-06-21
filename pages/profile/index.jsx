@@ -1,5 +1,5 @@
 import Layout from "@components/Layout";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import SideBar from "@components/SideBar";

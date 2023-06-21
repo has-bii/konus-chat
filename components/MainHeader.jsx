@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 ``;
-function Header({ title }) {
+function MainHeader({ title }) {
   const [toggle, setToggle] = useState(false);
 
   const openDropdown = () => {
@@ -11,8 +11,8 @@ function Header({ title }) {
   };
 
   return (
-    <div className="flex w-full gap-4 px-4 pt-4 h-fit bg-white/10 border-b-white/[.2] border-b lg:border-b-0 lg:bg-transparent">
-      <div className="self-center w-full pb-4 text-3xl font-semibold lg:pb-0">
+    <div className="flex w-full gap-4 px-4 pt-4 h-fit bg-white/10 border-b-white/[.2] border-b">
+      <div className="self-center w-full pb-4 text-3xl font-semibold">
         {title}
       </div>
 
@@ -56,8 +56,8 @@ function Header({ title }) {
   );
 }
 
-Header.propTypes = {
+MainHeader.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default Header;
+export default MainHeader;

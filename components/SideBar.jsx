@@ -14,6 +14,7 @@ function SideBar({ image }) {
             alt="Profile"
             sizes="(max-width: 768px) 100vw"
             quality={50}
+            priority={true}
             style={{ objectFit: "cover" }}
           />
         </div>

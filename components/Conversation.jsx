@@ -5,21 +5,21 @@ function Conversation() {
   const user = { id: 1 };
 
   const messages = [
-    { id: 1, body: "Hi👋", user: { id: "1" } },
-    { id: 2, body: "Hello👋", user: { id: "2" } },
-    { id: 3, body: "Whats up?", user: { id: "1" } },
-    { id: 4, body: "Good bro!", user: { id: "2" } },
-    { id: 5, body: "Wanna hangout?", user: { id: "1" } },
-    { id: 6, body: "Absolutely!", user: { id: "2" } },
-    { id: 7, body: "Absolutely!", user: { id: "1" } },
-    { id: 8, body: "Absolutely!", user: { id: "2" } },
-    { id: 9, body: "Absolutely!", user: { id: "1" } },
-    { id: 10, body: "Absolutely!", user: { id: "1" } },
-    { id: 11, body: "Absolutely!", user: { id: "2" } },
-    { id: 12, body: "Absolutely!", user: { id: "1" } },
-    { id: 13, body: "Absolutely!", user: { id: "2" } },
-    { id: 14, body: "Absolutely!", user: { id: "1" } },
-    { id: 15, body: "Absolutely!", user: { id: "2" } },
+    // { id: 1, body: "Hi👋", user: { id: "1" } },
+    // { id: 2, body: "Hello👋", user: { id: "2" } },
+    // { id: 3, body: "Whats up?", user: { id: "1" } },
+    // { id: 4, body: "Good bro!", user: { id: "2" } },
+    // { id: 5, body: "Wanna hangout?", user: { id: "1" } },
+    // { id: 6, body: "Absolutely!", user: { id: "2" } },
+    // { id: 7, body: "Absolutely!", user: { id: "1" } },
+    // { id: 8, body: "Absolutely!", user: { id: "2" } },
+    // { id: 9, body: "Absolutely!", user: { id: "1" } },
+    // { id: 10, body: "Absolutely!", user: { id: "1" } },
+    // { id: 11, body: "Absolutely!", user: { id: "2" } },
+    // { id: 12, body: "Absolutely!", user: { id: "1" } },
+    // { id: 13, body: "Absolutely!", user: { id: "2" } },
+    // { id: 14, body: "Absolutely!", user: { id: "1" } },
+    // { id: 15, body: "Absolutely!", user: { id: "2" } },
   ];
 
   return (
